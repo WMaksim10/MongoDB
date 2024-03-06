@@ -46,8 +46,10 @@ EOF
 ip=$(hostname -I)
 echo "L'adresse IP de cette machine est : $ip"
 
+
 #Definition par l'utilisateur du nom du replication set et definition du role de la machine
 read -p 'Nom du relpset: ' replName
+
 
 #Creation du fichier de configuration
 cat > /etc/mongod.conf	<<EOF
