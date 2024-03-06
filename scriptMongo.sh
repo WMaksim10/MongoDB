@@ -1,5 +1,5 @@
 #!/bin/bash
-#Installatiyon de mongodb
+#Installation de mongodb
 apt update -y
 apt install curl -y
 curl -O http://downloads.mongodb.org/linux/mongodb-linux-x86_64-2.6.12.tgz
