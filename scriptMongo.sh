@@ -35,6 +35,7 @@ cat > /etc/systemd/system/mongodb.service	<<EOF
 Description=High-performance, schema-free document-oriented database
 After=network.target
 [Service]
+ExecStartPre=/bin/sleep 10
 User=mongodb
 ExecStart=/usr/local/bin/mongod --config /etc/mongod.conf
 [Install]
