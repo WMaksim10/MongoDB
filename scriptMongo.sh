@@ -64,7 +64,7 @@ replication:
    replSetName: $replName
 net:
    bindIp: 127.0.0.1,$ip
-   port: 27017
+   port: 27018
 EOF
 
 echo 'Quelle role aura cette machine ?'
@@ -99,16 +99,16 @@ then
 	sleep 2
 
         #Commande mongodb pour activer la replication
-	mongo -p 27017	<<-EOF
+	mongo -p 27018	<<-EOF
 rs.initiate()
 	EOF
 	sleep 5
-	mongo -p 27017	<<-EOF
-rs.add('$IPsec:27017')
+	mongo -p 27018	<<-EOF
+rs.add('$IPsec:27018')
 	EOF
 	sleep 1
-	mongo -p 27017	<<-EOF
-rs.addArb('$IParb:27017')
+	mongo -p 27018	<<-EOF
+rs.addArb('$IParb:27018')
 	EOF
 fi
 
@@ -122,7 +122,7 @@ then
         systemctl status mongodb.service
         sleep 1
 
-	mongo -p 27017	<<-EOF
+	mongo -p 27018	<<-EOF
 rs.slaveOk()
 	EOF
 fi
