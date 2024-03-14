@@ -86,7 +86,7 @@ done
 
 if [[ $role -eq 1 ]]
 then
-	read -p 'Adresse IP du secondary: ' IPsec
+	read -p "Adresse IP du secondary: " IPsec
         read -p "Adresse IP de l'arbitre: " IParb
 
         #Enregistrement des modifications
@@ -99,15 +99,15 @@ then
 	sleep 2
 
         #Commande mongodb pour activer la replication
-	mongo -p 27018	<<-EOF
+	mongo --port 27018	<<-EOF
 rs.initiate()
 	EOF
 	sleep 5
-	mongo -p 27018	<<-EOF
+	mongo --port 27018	<<-EOF
 rs.add('$IPsec:27018')
 	EOF
 	sleep 1
-	mongo -p 27018	<<-EOF
+	mongo --port 27018	<<-EOF
 rs.addArb('$IParb:27018')
 	EOF
 fi
@@ -122,7 +122,7 @@ then
         systemctl status mongodb.service
         sleep 1
 
-	mongo -p 27018	<<-EOF
+	mongo --port 27018	<<-EOF
 rs.slaveOk()
 	EOF
 fi
