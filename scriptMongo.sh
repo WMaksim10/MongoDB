@@ -1,5 +1,5 @@
 #!/bin/bash
-#Installatiyon de mongodb
+#Installation de mongodb
 apt update -y
 apt install curl -y
 curl -O http://downloads.mongodb.org/linux/mongodb-linux-x86_64-2.6.12.tgz
@@ -35,6 +35,7 @@ cat > /etc/systemd/system/mongodb.service	<<EOF
 Description=High-performance, schema-free document-oriented database
 After=network.target
 [Service]
+ExecStartPre=/bin/sleep 10
 User=mongodb
 ExecStart=/usr/local/bin/mongod --config /etc/mongod.conf
 [Install]
@@ -86,7 +87,7 @@ done
 
 if [[ $role -eq 1 ]]
 then
-	read -p 'Adresse IP du secondary: ' IPsec
+	read -p "Adresse IP du secondary: " IPsec
         read -p "Adresse IP de l'arbitre: " IParb
 
         #Enregistrement des modifications
@@ -99,15 +100,15 @@ then
 	sleep 2
 
         #Commande mongodb pour activer la replication
-	mongo -p 27017	<<-EOF
+	mongo --port 27017	<<-EOF
 rs.initiate()
 	EOF
 	sleep 5
-	mongo -p 27017	<<-EOF
+	mongo --port 27017	<<-EOF
 rs.add('$IPsec:27017')
 	EOF
 	sleep 1
-	mongo -p 27017	<<-EOF
+	mongo --port 27017	<<-EOF
 rs.addArb('$IParb:27017')
 	EOF
 fi
@@ -122,7 +123,7 @@ then
         systemctl status mongodb.service
         sleep 1
 
-	mongo -p 27017	<<-EOF
+	mongo --port 27017	<<-EOF
 rs.slaveOk()
 	EOF
 fi
